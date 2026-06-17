@@ -1,0 +1,331 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodega Caura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script type="module">
+    // IMPORTANTE: Usa la misma versión 10.8.1 para todo
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, getDoc, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    import { addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAP4RynOCmzuVfKNVUH9yTLn6zqbX-FpO8",
+        authDomain: "bodegacaura.firebaseapp.com",
+        projectId: "bodegacaura",
+        storageBucket: "bodegacaura.firebasestorage.app",
+        messagingSenderId: "122047399077",
+        appId: "1:122047399077:web:59e6cad69ad96e7ff1f94c",
+        measurementId: "G-35PWB70C08"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Lógica para abrir el modal de encuesta
+            const btnAbrirEncuesta = document.getElementById('btn-abrir-encuesta');
+            if (btnAbrirEncuesta) {
+                btnAbrirEncuesta.addEventListener('click', () => {
+                    document.getElementById('modal-crear-encuesta').style.display = 'flex';
+                });
+            }
+
+            
+            // 2. Lógica para publicar la encuesta (MODIFICADA PARA MÚLTIPLES)
+const btnPublicar = document.getElementById('btn-publicar');
+if (btnPublicar) {
+    btnPublicar.addEventListener('click', async () => {
+        // 1. Mostrar estado de carga
+        btnPublicar.innerText = "Publicando...";
+        btnPublicar.classList.add('btn-cargando');
+        btnPublicar.disabled = true; // Deshabilitar para evitar doble clic
+
+        try {
+            const data = {
+                pregunta: document.getElementById('admin-pregunta').value,
+                opciones: [
+                    document.getElementById('admin-op1').value,
+                    document.getElementById('admin-op2').value,
+                    document.getElementById('admin-op3').value,
+                    document.getElementById('admin-op4').value
+                ].filter(op => op.trim() !== ""),
+                fecha: new Date()
+            };
+
+            // Validar que no esté vacía la pregunta
+            if(!data.pregunta) throw new Error("La pregunta es obligatoria");
+
+            await addDoc(collection(db, "encuestas"), data);
+            
+            alert("¡Encuesta publicada!");
+            document.getElementById('modal-crear-encuesta').style.display = 'none';
+            document.getElementById('admin-pregunta').value = "";
+            
+        } catch (error) {
+            console.error("Error al publicar:", error);
+            alert("Error: " + error.message);
+        } finally {
+            // 2. Restaurar botón pase lo que pase
+            btnPublicar.innerText = "Publicar Encuesta";
+            btnPublicar.classList.remove('btn-cargando');
+            btnPublicar.disabled = false;
+        }
+    });
+}
+            
+        });
+    </script>
+</head>
+<body>
+
+    <header class="navbar-moderna">
+        <div class="nav-izquierdo">
+        <button class="btn-menu" aria-label="Menú de navegación" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+        
+            <img src="logo.png" alt="Bodega Caura" class="logo-header">
+        
+    </div>
+
+<nav id="menu-lateral" class="menu-lateral">
+    <div class="header-menu">
+        <span>MENU</span>
+        <button class="btn-cerrar-menu" onclick="toggleMenu()">&times;</button>
+    </div>
+
+    <ul class="lista-menu">
+        <li><a href="login.html"><i class="fa-solid fa-user"></i> Administrador</a></li>
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> INICIO</a></li>
+        
+        <li class="categoria-padre">
+            <a href="#" onclick="toggleSubmenu(event)" class="btn-categoria">
+                <i class="fa-solid fa-bars"></i> CATEGORÍAS <i class="fa-solid fa-chevron-down flecha"></i>
+            </a>
+            <ul class="submenu" style="display: none;">
+                <li><a href="BEBIDAS.HTML">Bebidas</a></li>
+                <li><a href="#">Harina y Abarrotes</a></li>
+                <li><a href="#">Lácteos y Huevos</a></li>
+                <li><a href="#">Carnes y Embutidos</a></li>
+                <li><a href="#">Snacks y Dulces</a></li>
+                <li><a href="#">Bebe</a></li>
+                <li><a href="#">Mascotas</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<div id="fondo-oscuro-menu" onclick="toggleMenu()"></div>
+
+        <div class="nav-centro">
+            <div class="contenedor-busqueda">
+                <i class="fa-solid fa-magnifying-glass icono-buscar"></i>
+                <input type="text" placeholder="Buscar productos, marcas y más..." class="input-busqueda">            </div>
+        </div>
+
+        <div class="nav-derecho">
+            <button class="btn-carrito" aria-label="Ver carrito" onclick="abrirCarrito()">
+                <i class="fa-solid fa-bag-shopping"></i> <span class="contador-badge">0</span>
+            </button>
+
+            <!-- Carrito Lateral con nombres únicos -->
+            <div id="panel-carrito-lateral">
+                <div class="contenedor-interno-carrito">
+                    <div class="header-carrito-lateral">
+                        <h2>Tu Carrito</h2>
+                        <button class="btn-cerrar-carrito" onclick="cerrarCarrito()">&times;</button>
+                    </div>
+                    
+                    <div id="lista-productos-carrito"></div>
+                    <div id="total-pagar-carrito"></div>
+
+                    <div class="footer-carrito">
+                        <button class="btn-accion-vaciar" onclick="vaciarCarrito()">Vaciar</button>
+                        <button class="btn-accion-whatsapp" onclick="enviarWhatsApp()">Pedir por WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fondo oscuro único -->
+            <div id="fondo-oscuro-carrito" onclick="cerrarCarrito()"></div>
+        </div>
+
+
+        
+    </header>
+
+
+
+
+
+
+    
+    <!-- CONTENEDOR PRINCIPAL DE LOS CAROUSELS (OPTIMIZADO PARA MÓVILES) -->
+<div class="modulo-superior-container">
+
+    <!-- BLOCK 1: CARRUSEL DE PUBLICIDAD (AUTOMÁTICO Y LIMPIO) -->
+    <div class="carousel-publicidad">
+        <div class="pista-publicidad" id="pistaPublicidad">
+            
+            <!-- Banner 1: Desayunos -->
+            <div class="slide-publicidad">
+                <!-- CAMBIAR IMAGEN AQUÍ - PUBLICIDAD 1 -->
+                <img src="IMG CARRUSEL 1/Gemini_Generated_Image_e1p533e1p533e1p5.png">
+            </div>
+            
+            <!-- Banner 2: Productos Nacionales -->
+            <div class="slide-publicidad">
+                <!-- CAMBIAR IMAGEN AQUÍ - PUBLICIDAD 2 -->
+                <img src="IMG CARRUSEL 1/Gemini_Generated_Image_pucjmhpucjmhpucj.png">
+            </div>
+            
+            <!-- Banner 3: Ofertas de Almacén -->
+            <div class="slide-publicidad">
+                <!-- CAMBIAR IMAGEN AQUÍ - PUBLICIDAD 3 -->
+                <img src="IMG CARRUSEL 1/484484855_1115564883918618_8188765344780215297_n.jpg">
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- BLOCK 2: CARRUSEL DE PATROCINADORES (MANUAL CON FLECHAS) -->
+    <div class="carousel-patrocinadores">
+        <!-- Flecha Izquierda -->
+        <button class="flecha-nav prev" id="btnPrevPatroc" aria-label="Anterior">&#10094;</button>
+        
+        <div class="contenedor-marcas" id="contenedorMarcas">
+            
+            <!-- Marca 1: Alimentos Mari -->
+            <div class="logo-circulo">
+                <!-- CAMBIAR IMAGEN AQUÍ - PATROCINADOR 1 (MARI) -->
+                <img src="IMG CARRUSEL 2/images.png">
+            </div>
+            
+            <!-- Marca 2: Empresas COCACOLA -->
+            <div class="logo-circulo">
+                <!-- CAMBIAR IMAGEN AQUÍ - PATROCINADOR 2 (COCACOLA) -->
+                <img src="IMG CARRUSEL 2/Coca-Cola-1210.webp">
+            </div>
+            
+            <!-- Marca 3: Alimentos AMANECER -->
+            <div class="logo-circulo">
+                <!-- CAMBIAR IMAGEN AQUÍ - PATROCINADOR 3 (AMANECER) -->
+                <img src="IMG CARRUSEL 2/images (2).png">
+            </div>
+            
+            <!-- Marca 4: PEPSI -->
+            <div class="logo-circulo">
+                <!-- CAMBIAR IMAGEN AQUÍ - PATROCINADOR 4 (PEPSI) -->
+                <img src="IMG CARRUSEL 2/images (3).png">
+            </div>
+            
+            <!-- Marca 5: Café SOFIA -->
+            <div class="logo-circulo">
+                <!-- CAMBIAR IMAGEN AQUÍ - PATROCINADOR 5 (SOFIA) -->
+                <img src="IMG CARRUSEL 2/images (1).png">
+            </div>
+            
+        </div>
+
+        <!-- Flecha Derecha -->
+        <button class="flecha-nav next" id="btnNextPatroc" aria-label="Siguiente">&#10095;</button>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="contenedor-acciones-scroll">
+    <div class="fila-acciones">
+        <button class="btn-agregar-nuevo" id="btn-abrir-modal">
+            + Agregar Producto
+        </button>
+        
+        <button class="btn-agregar-nuevo .a" id="btn-abrir-encuesta">
+            <i class="fa-solid fa-poll"></i> Encuesta
+        </button>
+        
+        <button class="btn-agregar-nuevo .b" onclick="window.location.href='resultados.html'">
+            <i class="fa-solid fa-chart-pie"></i> Resultados
+        </button>
+    </div>
+</div>
+
+
+<div id="modal-crear-encuesta" class="modal-oculto">
+    <div class="contenido-modal">
+        <h3>Configurar Encuesta</h3>
+        <input type="text" id="admin-pregunta" placeholder="Pregunta para el cliente">
+        <input type="text" id="admin-op1" placeholder="Opción 1">
+        <input type="text" id="admin-op2" placeholder="Opción 2">
+        <input type="text" id="admin-op3" placeholder="Opción 3 (opcional)">
+        <input type="text" id="admin-op4" placeholder="Opción 4 (opcional)">
+        <button id="btn-publicar" class="btn-agregar-nuevo">Publicar Encuesta</button>
+    </div>
+</div>
+
+<script>
+
+    
+
+
+
+</script>
+
+<div id="modal-editar" class="modal-oculto">
+    <div class="contenido-modal">
+        <button class="btn-cerrar-moderno" id="btn-cerrar-modal">&times;</button>        
+        <h3>Nuevo Producto</h3>
+        <input type="text" id="edit-nombre" placeholder="Nombre">
+        <input type="number" id="edit-precio" placeholder="Precio">
+        <select id="edit-categoria">
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option value="gaseosas">Gaseosas</option>
+            <option value="snacks">Snacks</option>
+            <option value="licores">Licores</option>
+            <option value="otros">Otros</option>
+        </select>
+
+        <div class="input-file-container">
+            <label for="input-archivo" class="btn-archivo">IMAGEN</label>
+            <input type="file" id="input-archivo" accept="image/*" style="display: none;">
+            <span id="nombre-archivo" class="texto-archivo-elegante">Ninguna foto seleccionada</span>
+        </div>
+        <textarea id="edit-desc" placeholder="Descripción"></textarea>
+        
+        <button id="btn-guardar-producto">Guardar Producto</button>
+    </div>
+</div>
+
+
+<div id="modal-detalle" class="modal-oculto">
+    <div class="contenido-modal" style="align-items: center; text-align: center;">
+        <button class="btn-cerrar-moderno" onclick="cerrarDetalle()">&times;</button>
+        <img id="modal-img" src="" style="width: 200px; height: 200px; border-radius: 20px; margin-bottom: 15px;">
+        <h2 id="modal-nombre" style="color:#461400; margin: 0;"></h2>
+        <p id="modal-precio" class="precio" style="font-size: 1.5rem;"></p>
+        <p id="modal-categoria" style="color: #b38f72; font-weight: bold; text-transform: uppercase;"></p>
+        <p id="modal-desc" style="color: #666; font-size: 0.95rem; margin-top: 10px;"></p>
+    </div>
+</div>
+
+
+
+
+<main id="contenedor-admin" class="contenedor-tienda"></main>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
+
+

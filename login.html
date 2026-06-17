@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodega Caura</title>
+    
+</head>
+
+<style>
+    body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fdfaf6; /* Un tono crema muy suave */
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
+}
+
+h2 {
+    color: #461400; /* Tu marrón oscuro */
+    margin-bottom: 5px;
+}
+
+p {
+    color: #b38f72; /* Tu color principal */
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background: #f9f9f9;
+    text-align: center;
+    font-size: 1.1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #b38f72;
+    box-shadow: 0 0 5px rgba(179, 143, 114, 0.3);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #461400;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #b38f72;
+}
+</style>
+<body>
+
+<div class="login-container">
+    <div class="login-card">
+        <h2>Bienvenido</h2>
+        <p>Acceso administrativo</p>
+        <input type="password" id="pass" placeholder="••••••••">
+        <button onclick="verificar()">Iniciar Sesión</button>
+    </div>
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>

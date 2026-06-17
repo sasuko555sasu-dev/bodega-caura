@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - BodegaCaura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { 
+            --primary: #2563eb; 
+            --bg: #f1f5f9; 
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main);
+            padding: 20px; 
+            max-width: 500px; 
+            margin: auto; 
+        }
+        
+        .header { display: flex; align-items: center; margin-bottom: 25px; }
+        .btn-volver { 
+            text-decoration: none; color: var(--text-muted); font-weight: 600; 
+            padding: 8px; border-radius: 10px; transition: 0.2s;
+            display: flex; align-items: center; font-size: 0.9rem;
+        }
+        .btn-volver:hover { background: #e2e8f0; color: var(--primary); }
+
+        h2 { font-weight: 800; letter-spacing: -0.5px; margin: 0 0 0 10px; }
+
+        #contenedor-grafica { 
+            background: white; padding: 25px; border-radius: 20px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+            margin-bottom: 30px; height: 280px; 
+        }
+        
+        .encuesta-contenedor-grid { display: flex; flex-direction: column; gap: 16px; }
+        
+        .encuesta-tarjeta-item { 
+            background: white; padding: 20px; border-radius: 16px; 
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .encuesta-tarjeta-item:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 12px 24px -8px rgba(37, 99, 235, 0.2); 
+            border-color: var(--primary);
+        }
+        
+        .btn-eliminar { color: #94a3b8; font-weight: 800; padding: 5px 10px; cursor: pointer; }
+        .btn-eliminar:hover { color: #e11d48; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="admin.html" class="btn-volver">← Volver</a>
+        <h2>Resultados</h2>
+    </div>
+
+    <div id="contenedor-grafica">
+        <canvas id="miGrafica"></canvas>
+    </div>
+
+    <div id="contenedor-encuestas" class="encuesta-contenedor-grid">Cargando datos...</div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // PEGA AQUÍ TUS CREDENCIALES
+        const firebaseConfig = {
+            apiKey: "AIzaSyAP4RynOCmzuVfKNVUH9yTLn6zqbX-FpO8",
+            authDomain: "bodegacaura.firebaseapp.com",
+            projectId: "bodegacaura",
+            storageBucket: "bodegacaura.firebasestorage.app",
+            messagingSenderId: "122047399077",
+            appId: "1:122047399077:web:59e6cad69ad96e7ff1f94c"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        let grafica = null;
+
+        async function eliminarEncuesta(id, e) {
+            e.stopPropagation();
+            if(confirm("¿Eliminar esta encuesta permanentemente?")) {
+                // 1. Eliminamos de Firestore
+                await deleteDoc(doc(db, "encuestas", id));
+                
+                // 2. Si la encuesta eliminada es la que estamos viendo, limpiamos la gráfica
+                if(grafica) {
+                    grafica.destroy();
+                    grafica = null;
+                }
+                
+                // 3. Recargamos la lista
+                cargarEncuestas();
+            }
+        }
+        async function cargarEncuestas() {
+            const contenedor = document.getElementById('contenedor-encuestas');
+            const snap = await getDocs(collection(db, "encuestas"));
+            contenedor.innerHTML = "";
+            snap.forEach(d => {
+                const data = d.data();
+                const div = document.createElement("div");
+                div.className = "encuesta-tarjeta-item";
+                div.innerHTML = `
+                    <span style="flex-grow: 1; font-weight: 600;">${data.pregunta}</span>
+                    <span class="btn-eliminar" title="Eliminar">✕</span>
+                `;
+                div.onclick = () => window.mostrarResultados(d.id, data.pregunta, data.opciones);
+                div.querySelector('.btn-eliminar').onclick = (e) => eliminarEncuesta(d.id, e);
+                contenedor.appendChild(div);
+            });
+        }
+
+        window.mostrarResultados = async (idEncuesta, pregunta, opciones) => {
+            const q = query(collection(db, "votos"), where("encuestaId", "==", idEncuesta));
+            const snap = await getDocs(q);
+            const conteo = {};
+            opciones.forEach(opt => conteo[opt] = 0);
+            snap.forEach(d => { const voto = d.data().opcion; if(conteo.hasOwnProperty(voto)) conteo[voto]++; });
+
+            const ctx = document.getElementById('miGrafica').getContext('2d');
+            if(grafica) grafica.destroy();
+            grafica = new Chart(ctx, {
+                type: 'bar',
+                data: { 
+                    labels: Object.keys(conteo), 
+                    datasets: [{ 
+                        label: 'Votos recibidos', 
+                        data: Object.values(conteo), 
+                        backgroundColor: 'rgba(37, 99, 235, 0.8)',
+                        borderRadius: 8
+                    }] 
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        };
+
+        cargarEncuestas();
+    </script>
+</body>
+</html>
