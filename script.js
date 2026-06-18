@@ -26,14 +26,9 @@ window.cambiarCantidad = function(btn, cambio) {
     display.innerText = cantidad;
 };
 
-// Modifica la definición de tu función así:
 
 
-
-// --- 2. INICIALIZACIÓN SEGURA ---
-document.addEventListener('DOMContentLoaded', () => {
-    
-    async function cargarCatalogo(esAdmin = false) {
+ async function cargarCatalogo(esAdmin = false) {
     const contenedor = document.getElementById('contenedor-admin');
     if (!contenedor) return;
 
@@ -90,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="cantidad-valor">0</span>
                         <button class="btn-sumar" onclick="cambiarCantidad(this, 1)">+</button>
                     </div>
-                    <button class="btn-agregar-carrito" onclick="agregarAlCarrito(this)">Agregar al Carrito</button>
+                    <button class="btn-agregar-carrito" onclick="agregarAlCarrito(this)">Agregar</button>
                     ` : ""}
 
                     ${botonesAdmin} 
@@ -120,6 +115,15 @@ document.addEventListener('error', function(e) {
 
 
 
+// --- 2. INICIALIZACIÓN SEGURA ---
+document.addEventListener('DOMContentLoaded', () => {
+    
+   
+
+
+
+
+
 
 
 
@@ -128,20 +132,31 @@ document.addEventListener('error', function(e) {
 
 // --- NUEVA LÓGICA DE ENCUESTA (EN index.html / script.js) ---
 async function iniciarSistemaEncuesta() {
-    console.log("Intentando cargar encuesta...");
     const contenedor = document.getElementById('contenedor-encuesta-cliente');
     if (!contenedor) return;
 
     try {
-        // 1. Buscamos la encuesta más reciente de la colección "encuestas"
         const q = query(collection(db, "encuestas"), orderBy("fecha", "desc"), limit(1));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
             const docEncuesta = querySnapshot.docs[0];
             const data = docEncuesta.data();
-            const idEncuesta = docEncuesta.id; // ESTE ES EL ID QUE NECESITAMOS
+            const idEncuesta = docEncuesta.id; // Este es el ID único de la encuesta nueva
 
+            // --- NUEVA LÓGICA DE VERIFICACIÓN ---
+            // Recuperamos el ID de la última encuesta en la que el usuario votó
+            const encuestaVotada = localStorage.getItem('encuesta_votada_id');
+
+            // Si el ID de la encuesta actual es IGUAL al ID guardado, significa que ya votó
+            if (encuestaVotada === idEncuesta) {
+                console.log("Ya votó en esta encuesta específica.");
+                contenedor.style.display = 'none';
+                return;
+            }
+            // ------------------------------------
+
+            // ... (resto de tu código: mostrar pregunta y opciones) ...
             const preguntaEl = document.getElementById('pregunta-cliente');
             if (preguntaEl) preguntaEl.innerText = data.pregunta;
 
@@ -154,23 +169,21 @@ async function iniciarSistemaEncuesta() {
                     btn.className = "btn-agregar-nuevo";
                     
                     btn.onclick = async () => {
-                        // 2. Guardamos el voto VINCULADO a la encuesta
                         await addDoc(collection(db, "votos"), { 
                             opcion: texto, 
-                            encuestaId: idEncuesta, // <--- RELACIÓN ESTABLECIDA
+                            encuestaId: idEncuesta, 
                             fecha: new Date() 
                         });
                         
-                        localStorage.setItem('ya_voto_caura', 'true');
+                        // Guardamos EL ID de la encuesta, no solo un "true"
+                        localStorage.setItem('encuesta_votada_id', idEncuesta);
                         contenedor.style.display = 'none';
-                        alert("¡Gracias por tu voto!");
                     };
                     opcionesCont.appendChild(btn);
                 });
             }
             contenedor.style.display = 'flex';
         } else {
-            console.log("No hay encuestas disponibles.");
             contenedor.style.display = 'none';
         }
     } catch (error) {
@@ -450,7 +463,15 @@ window.prepararEdicion = (id, nombre, precio, desc, categoria) => {
 
 
 
+// Asegúrate de seleccionar el botón y el modal
+const btnCerrar = document.getElementById('btn-cerrar-encuesta');
+const modal = document.getElementById('modal-crear-encuesta');
 
+if (btnCerrar) {
+    btnCerrar.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+}
 
 
 function iniciarCarrusel() {
@@ -743,7 +764,6 @@ function verificar() {
     const contrasenaCorrecta = "12345678"; 
 
     if (passwordInput === contrasenaCorrecta) {
-        alert("Acceso concedido");
         // Redirige al administrador a la página de gestión
         window.location.href = "admin.html"; 
     } else {
@@ -757,12 +777,16 @@ function verificar() {
 async function toggleOcultar(id, estadoActual) {
     try {
         const docRef = doc(db, "productos", id);
-        // Cambiamos a lo contrario (si era true, pasa a false)
         await updateDoc(docRef, { oculto: !estadoActual });
         
-        // Recargamos el catálogo para que el ojo cambie de icono
+        // Verifica si estamos en la página de admin buscando el botón
         const btnGuardar = document.getElementById('btn-guardar-producto');
-        cargarCatalogo(btnGuardar !== null); 
+        const esAdmin = btnGuardar !== null;
+        
+        // Llamada global segura
+        if (window.cargarCatalogo) {
+            window.cargarCatalogo(esAdmin);
+        }
     } catch (e) {
         alert("Error al cambiar visibilidad: " + e.message);
     }
@@ -808,5 +832,5 @@ window.vaciarCarrito = vaciarCarrito;
 window.enviarWhatsApp = enviarWhatsApp;
 window.cambiarCantidad = cambiarCantidad;
 window.agregarAlCarrito = agregarAlCarrito;
-
+window.cargarCatalogo = cargarCatalogo; // AGREGA ESTA LÍNEA
 

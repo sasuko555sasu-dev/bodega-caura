@@ -1302,11 +1302,22 @@ body {
     background: #27ae60;
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px 16px;
+    border-radius: 12px;
     cursor: pointer;
     width: 100%;
-    margin-top: 5px;
+    margin-top: 8px;
+    font-weight: 600;
+    
+    /* Efecto de transición suave */
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
+    /* Evita el destello gris/azul del navegador al tocar */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-agregar-carrito:active {
+    transform: scale(0.95); /* El botón se encoge un poco al tacto */
+    background: #1e8449;    /* Oscurece un poco al tocar */
 }
 
 .item-carrito {
@@ -1400,5 +1411,26 @@ body {
 }
 
 
+.btn-cerrar-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #64748b;
+    transition: 0.2s;
+}
 
+.btn-cerrar-modal:hover {
+    color: #e11d48;
+}
+
+/* Asegúrate de que el contenido del modal sea relativo para que la X se posicione bien */
+.contenido-modal {
+    position: relative;
+    padding: 30px; /* Un poco más de espacio para la X */
+}
 
