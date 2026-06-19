@@ -195,8 +195,8 @@
     
     /* ESTO ES LA CLAVE: Hace que la animación ocurra de derecha a izquierda */
     transform-origin: right center !important;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    z-index: 1000 !important;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;   
+     z-index: 1000 !important;
 }
 
 /* Estado cuando el usuario hace clic */
@@ -229,6 +229,7 @@
 
 .contenedor-busqueda.busqueda-activa .input-busqueda {
     display: block !important;
+    opacity: 1;
 }
 /* Lado Derecho: Botón de Carrito */
 .nav-derecho {
@@ -1315,10 +1316,7 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-.btn-agregar-carrito:active {
-    transform: scale(0.95); /* El botón se encoge un poco al tacto */
-    background: #1e8449;    /* Oscurece un poco al tocar */
-}
+
 
 .item-carrito {
     border-bottom: 1px solid #eee;

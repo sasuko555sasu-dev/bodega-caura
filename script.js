@@ -92,6 +92,8 @@ window.cambiarCantidad = function(btn, cambio) {
                 </div>
             `;
         });
+        const eventoProductosCargados = new CustomEvent('productosRenderizados');
+        document.dispatchEvent(eventoProductosCargados);
     } catch (error) {
         console.error("Error al cargar productos:", error);
         // Muestra un mensaje amigable al usuario en caso de error de conexión
@@ -124,6 +126,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+// --- LÓGICA DEL BUSCADOR ---
+    const contenedorBusqueda = document.querySelector('.contenedor-busqueda');
+    const inputBusqueda = document.querySelector('.input-busqueda');
+
+    if (contenedorBusqueda && inputBusqueda) {
+        // Abrir buscador
+        contenedorBusqueda.addEventListener('click', (e) => {
+            e.stopPropagation();
+            contenedorBusqueda.classList.add('busqueda-activa');
+            inputBusqueda.style.display = 'block';
+            inputBusqueda.focus();
+        });
+
+        // Cerrar al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!contenedorBusqueda.contains(e.target)) {
+                contenedorBusqueda.classList.remove('busqueda-activa');
+                inputBusqueda.style.display = 'none';
+            }
+        });
+
+        // Lógica de filtrado (ESTO ES LO QUE HACÍA FALTA)
+        inputBusqueda.addEventListener('input', (e) => {
+            const valorBusqueda = e.target.value.toLowerCase();
+            const productos = document.querySelectorAll('.tarjeta-producto');
+
+            productos.forEach(tarjeta => {
+                const nombre = tarjeta.querySelector('h3')?.innerText.toLowerCase() || "";
+                // Si el nombre coincide, se muestra, si no, se oculta
+                tarjeta.style.display = nombre.includes(valorBusqueda) ? 'block' : 'none';
+            });
+        });
+    }
 
 
 
@@ -132,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- NUEVA LÓGICA DE ENCUESTA (EN index.html / script.js) ---
 async function iniciarSistemaEncuesta() {
+    
     const contenedor = document.getElementById('contenedor-encuesta-cliente');
     if (!contenedor) return;
 
@@ -240,9 +276,11 @@ iniciarSistemaEncuesta(); // Y LLÁMALO AQUÍ PARA PROBAR
         });
     }
 
+ 
+
+});
 
 
-    
 
 
 
@@ -340,7 +378,6 @@ async function subirImagenACloudinary(archivo) {
 }
 
 
-
 async function crearNuevoProducto() {
     const inputArchivo = document.getElementById('input-archivo');
     const archivo = inputArchivo.files[0];
@@ -385,40 +422,9 @@ async function crearNuevoProducto() {
 }
 
 
-
-
-
-
-
-
-
-
-
     // 4. Carrusel
     if (document.getElementById("pistaPublicidad")) iniciarCarrusel();
 
-    // 5. BUSCADOR ÚNICO Y FUNCIONAL
-    // 5. BUSCADOR DIAGNÓSTICO
-   const contenedorBusqueda = document.querySelector('.contenedor-busqueda');
-const inputBusqueda = document.querySelector('.input-busqueda');
-
-// Usamos touchstart para móviles para respuesta inmediata
-contenedorBusqueda.addEventListener('touchstart', function(e) {
-    // Si no está activo, lo activamos
-    if (!this.classList.contains('busqueda-activa')) {
-        e.preventDefault(); // Evita que se cierre por "ghost click"
-        this.classList.add('busqueda-activa');
-        inputBusqueda.focus();
-    }
-}, {passive: false});
-
-// Para cerrar si haces clic en otra parte de la pantalla
-document.addEventListener('click', (e) => {
-    if (!contenedorBusqueda.contains(e.target)) {
-        contenedorBusqueda.classList.remove('busqueda-activa');
-    }
-});
-});
 
 
 
@@ -809,11 +815,6 @@ async function toggleOcultar(id, estadoActual) {
             }
         });
     }
-
-
-
-
-
 
 
 
