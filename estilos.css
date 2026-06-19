@@ -476,7 +476,11 @@ body {
     cursor: pointer;
     width: 100%;
 }
-
+.btn-agregar-carrito:active {
+    transform: scale(0.95); /* El botón se encoge ligeramente al tocar */
+    background-color: #219150; /* Un tono un poco más oscuro que el original (#27ae60) */
+    transition: transform 0.1s ease, background-color 0.1s ease;
+}
 
 /* Estado inicial (invisible fuera de pantalla) */
 .modal-oculto {
