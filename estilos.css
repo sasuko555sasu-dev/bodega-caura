@@ -1436,3 +1436,52 @@ body {
     padding: 30px; /* Un poco más de espacio para la X */
 }
 
+
+
+
+
+
+.contenedor-delivery-fijo {
+    position: fixed;
+    bottom: 12px;
+    left: 10px;
+    right: 10px;
+    background-color: #2c1a12;
+    color: white;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between; /* Empuja el botón a la derecha */
+    align-items: center;            /* Centra todo verticalmente */
+    z-index: 9999;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.info-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Separación fija entre icono y texto */
+    overflow: hidden; /* Evita que el texto largo rompa el diseño */
+}
+
+.texto-group {
+    display: flex;
+    flex-direction: column; /* Apila el título y el subtítulo */
+    line-height: 1.2;
+}
+
+.titulo { font-weight: bold; font-size: 0.8rem; }
+.subtitulo { font-size: 0.65rem; opacity: 0.8; white-space: nowrap; }
+
+.btn-whatsapp-delivery {
+    background-color: #25d366;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0; /* Asegura que el botón no se encoja aunque el texto sea largo */
+}
