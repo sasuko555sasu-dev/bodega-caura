@@ -679,7 +679,7 @@ window.enviarWhatsApp = function() {
     }
 
     // Tu número de teléfono (asegúrate de incluir el código de país, ej: 58 para Venezuela)
-    const telefono = "584120000000"; 
+    const telefono = "584264373589"; 
     let mensaje = "¡Hola! Quiero realizar el siguiente pedido:\n\n";
     let totalGeneral = 0;
 
