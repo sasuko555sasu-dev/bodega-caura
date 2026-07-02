@@ -831,6 +831,19 @@ async function toggleOcultar(id, estadoActual) {
 
 
 
+// Al final de tu archivo script.js, añade esto:
+window.limpiarFiltro = () => {
+    localStorage.removeItem('filtro');
+    location.reload(); // Recarga para limpiar el estado
+};
+
+window.filtrarPorCategoria = (categoria) => {
+    localStorage.setItem('filtro', categoria);
+    location.reload(); // Recarga para aplicar el nuevo filtro
+};
+
+
+
 
 window.abrirCarrito = abrirCarrito;
 window.cerrarCarrito = cerrarCarrito;
