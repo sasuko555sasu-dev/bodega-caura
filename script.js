@@ -21,9 +21,13 @@ window.cambiarCantidad = function(btn, cambio) {
     const display = tarjeta.querySelector('.cantidad-valor');
     if (!display) return;
     
-    let cantidad = parseInt(display.innerText) + cambio;
-    if (cantidad < 0) cantidad = 0;
-    display.innerText = cantidad;
+    // Obtenemos el valor actual (float para soportar decimales escritos)
+    let valorActual = parseFloat(display.innerText) || 0;
+    
+    // Sumamos/Restamos el cambio (como los botones son enteros, funcionará bien)
+    let nuevoValor = Math.max(0, Math.floor(valorActual) + cambio);
+    
+    display.innerText = nuevoValor;
 };
 
 
@@ -79,14 +83,31 @@ window.cambiarCantidad = function(btn, cambio) {
                         <p class="precio">$${p.precio}</p>
                     </div>
 
-                    ${!esAdmin ? `
-                    <div class="selector-cantidad">
-                        <button class="btn-restar" onclick="cambiarCantidad(this, -1)">-</button>
-                        <span class="cantidad-valor">0</span>
-                        <button class="btn-sumar" onclick="cambiarCantidad(this, 1)">+</button>
-                    </div>
-                    <button class="btn-agregar-carrito" onclick="agregarAlCarrito(this)">Agregar</button>
-                    ` : ""}
+                    ${!esAdmin ? (() => {
+                        const esProductoPesado = p.categoria === "Carnes y Charcutería";
+                        
+                        // Dentro de tu función cargarCatalogo, reemplaza el bloque de selectorHTML por esto:
+                        const selectorHTML = `
+                            <div class="selector-cantidad" onclick="event.stopPropagation()">
+                                <button class="btn-restar" onclick="cambiarCantidad(this, -1)">-</button>
+                                
+                                <span class="cantidad-valor" 
+                                    contenteditable="true" 
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46"
+                                    style="padding: 2px 5px; min-width: 30px; display: inline-block; text-align: center; outline: none; cursor: text;">
+                                    0
+                                </span>
+                                
+                                <button class="btn-sumar" onclick="cambiarCantidad(this, 1)">+</button>
+                                ${p.categoria === "Carnes y Charcutería" ? '<span style="font-size: 0.8rem; margin-left: 5px;">kg</span>' : ''}
+                            </div>
+                        `;
+
+                        return `
+                            ${selectorHTML}
+                            <button class="btn-agregar-carrito" onclick="agregarAlCarrito(this)">Agregar</button>
+                        `;
+                    })() : ""}
 
                     ${botonesAdmin} 
                 </div>
@@ -586,22 +607,27 @@ let carrito = [];
 
 window.agregarAlCarrito = function(btn) {
     const tarjeta = btn.closest('.tarjeta-producto');
-    const cantidad = parseInt(tarjeta.querySelector('.cantidad-valor').innerText);
+    const display = tarjeta.querySelector('.cantidad-valor');
     
+    // parseFloat lee el número con decimales si el usuario escribió "0.5" o "1.5"
+    const cantidad = parseFloat(display.innerText);
+
     if (cantidad > 0) {
         const nombre = tarjeta.querySelector('h3').innerText;
-        const precio = parseFloat(tarjeta.querySelector('.precio').innerText.replace('$', ''));
-        // Capturamos la URL de la imagen del producto
+        // Limpiamos el precio para evitar errores de formato
+        const precioTexto = tarjeta.querySelector('.precio').innerText.replace('$', '').replace(',', '.');
+        const precio = parseFloat(precioTexto);
         const imagen = tarjeta.querySelector('img').src; 
         
         carrito.push({ nombre, precio, cantidad, imagen });
         actualizarCarritoHTML();
-        
-       
+        alert(`Agregado: ${cantidad} al carrito.`);
     } else {
-        alert("Por favor, selecciona al menos una unidad.");
+        alert("Por favor, ingresa una cantidad válida mayor a 0.");
     }
 };
+
+
 
 function actualizarCarritoHTML() {
     const lista = document.getElementById('lista-productos-carrito');
