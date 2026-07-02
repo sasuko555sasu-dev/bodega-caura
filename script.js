@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getFirestore, collection, getDocs, getDoc, addDoc, deleteDoc, doc, updateDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";// --- CONFIGURACIÓN ---
+import { getFirestore, collection, getDocs, getDoc, addDoc, deleteDoc, doc, updateDoc, query, where, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyAP4RynOCmzuVfKNVUH9yTLn6zqbX-FpO8",
     authDomain: "bodegacaura.firebaseapp.com",
@@ -36,18 +37,28 @@ window.cambiarCantidad = function(btn, cambio) {
     const contenedor = document.getElementById('contenedor-admin');
     if (!contenedor) return;
 
-    // 1. Muestra el spinner mientras carga
     contenedor.innerHTML = '<div class="loader"></div>';
 
     try {
-        const querySnapshot = await getDocs(collection(db, "productos"));
+        // --- NUEVA LÓGICA DE FILTRO ---
+        const filtro = localStorage.getItem('filtro');
+        let productosRef;
+
+        if (filtro) {
+            // Filtra por categoría en Firebase
+            productosRef = query(collection(db, "productos"), where("categoria", "==", filtro));
+        } else {
+            // Trae todo si no hay filtro
+            productosRef = collection(db, "productos");
+        }
+        // ------------------------------
+
+        const querySnapshot = await getDocs(productosRef);
         
-        // 2. Limpia el contenedor (quita el spinner) antes de agregar los productos
         contenedor.innerHTML = "";
         
-        // 3. Manejo de estado vacío: si no hay productos
         if (querySnapshot.empty) {
-            contenedor.innerHTML = '<p style="text-align:center; color:#888;">LO SENTIMO A OCURRIDO UN ERROR (RECARGAR LA PAGINA.).</p>';
+            contenedor.innerHTML = `<p style="text-align:center; color:#888;">No hay productos en ${filtro || 'esta sección'}.</p>`;
             return;
         }
 
@@ -82,48 +93,22 @@ window.cambiarCantidad = function(btn, cambio) {
                         <h3>${p.nombre}</h3>
                         <p class="precio">$${p.precio}</p>
                     </div>
-
-                    ${!esAdmin ? (() => {
-                        const esProductoPesado = p.categoria === "Carnes y Charcutería";
-                        
-                        // Dentro de tu función cargarCatalogo, reemplaza el bloque de selectorHTML por esto:
-                        const selectorHTML = `
-                            <div class="selector-cantidad" onclick="event.stopPropagation()">
-                                <button class="btn-restar" onclick="cambiarCantidad(this, -1)">-</button>
-                                
-                                <span class="cantidad-valor" 
-                                    contenteditable="true" 
-                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46"
-                                    style="padding: 2px 5px; min-width: 30px; display: inline-block; text-align: center; outline: none; cursor: text;">
-                                    0
-                                </span>
-                                
-                                <button class="btn-sumar" onclick="cambiarCantidad(this, 1)">+</button>
-                                ${p.categoria === "Carnes y Charcutería" ? '<span style="font-size: 0.8rem; margin-left: 5px;">kg</span>' : ''}
-                            </div>
-                        `;
-
-                        return `
-                            ${selectorHTML}
-                            <button class="btn-agregar-carrito" onclick="agregarAlCarrito(this)">Agregar</button>
-                        `;
-                    })() : ""}
-
+                    ${!esAdmin ? `
+                        <div class="selector-cantidad" onclick="event.stopPropagation()">
+                            <button class="btn-restar" onclick="cambiarCantidad(this, -1)">-</button>
+                            <span class="cantidad-valor" contenteditable="true">0</span>
+                            <button class="btn-sumar" onclick="cambiarCantidad(this, 1)">+</button>
+                        </div>
+                        <button class="btn-agregar-carrito" onclick="agregarAlCarrito(this)">Agregar</button>
+                    ` : ""}
                     ${botonesAdmin} 
                 </div>
             `;
         });
-        const eventoProductosCargados = new CustomEvent('productosRenderizados');
-        document.dispatchEvent(eventoProductosCargados);
+        document.dispatchEvent(new CustomEvent('productosRenderizados'));
     } catch (error) {
         console.error("Error al cargar productos:", error);
-        // Muestra un mensaje amigable al usuario en caso de error de conexión
-        contenedor.innerHTML = `
-            <div style="text-align: center; padding: 20px;">
-                <p>No pudimos cargar los productos.</p>
-                <button onclick="location.reload()" style="padding: 10px 20px; cursor: pointer;">Reintentar</button>
-            </div>
-        `;
+        contenedor.innerHTML = `<p style="text-align:center;">Error de conexión. <button onclick="location.reload()">Reintentar</button></p>`;
     }
 }
 
