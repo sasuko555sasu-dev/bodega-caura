@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca tu repuesto</title>
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="estilosusa.css">
+    
+</head>
+<body>
+
+<header class="main-header">
+    <button class="hamburger-btn" onclick="toggleMenu()">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    
+        <!-- PANEL LATERAL PROFESIONAL -->
+    <div id="side-menu" class="side-menu">
+        <div class="menu-top">
+            <button class="close-btn" onclick="toggleMenu()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <nav class="menu-nav">
+            <ul>
+                <li class="active"><a href="#"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="../index.html"><i class="fa-solid fa-cart-shopping"></i> La Bodeguita</a></li>
+                <li><a href="#"><i class="fa-solid fa-users"></i> Quiénes Somos</a></li>
+            </ul>
+        </nav>
+        <div class="menu-footer">BuscaTuRepuesto</div>
+    </div>
+    <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <div class="logo">BuscaTuRepuesto</div>
+    <button class="search-trigger" aria-label="Buscar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+</header>
+
+    <div class="modulo-superior-container">
+        <div class="carousel-publicidad">
+            <div class="pista-publicidad" id="pistaPublicidad">
+                <div class="slide-publicidad"><img src="Gemini_Generated_Image_fuf8jjfuf8jjfuf8.png"></div>
+                <div class="slide-publicidad"><img src="IMG CARRUSEL 1/Gemini_Generated_Image_pucjmhpucjmhpucj.png"></div>
+                <div class="slide-publicidad"><img src="IMG CARRUSEL 1/484484855_1115564883918618_8188765344780215297_n.jpg"></div>
+            </div>
+        </div>
+        <div class="carousel-patrocinadores">
+            <button class="flecha-nav prev" id="btnPrevPatroc">&#10094;</button>
+            <div class="contenedor-marcas" id="contenedorMarcas">
+                <div class="logo-circulo"><img src="chevrolet.jpg"></div>
+                <div class="logo-circulo"><img src="nissan-logo-editorial-ilustrativo-sobre-fondo-blanco-icono-vectorial-logotipos-conjunto-de-iconos-redes-sociales-banner-plano-208329606.webp"></div>
+                <div class="logo-circulo"><img src="large-ford-logo-0.png"></div>
+                <div class="logo-circulo"><img src="toyota-logo-editorial-ilustrativo-sobre-fondo-blanco-eps-descargar-vector-jpeg-208333013.webp"></div>
+            </div>
+            <button class="flecha-nav next" id="btnNextPatroc">&#10095;</button>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="products-row">
+            <div class="card">
+                <div class="icon"><img src="images (1).jpg" width="100px" height="100px" alt="Bujía"></div>
+                <small>ENCENDIDO / BUJÍAS</small>
+                <h3>Bujía Iridium</h3>
+                <button class="btn-quote">COTIZAR</button>
+            </div>
+            <div class="card">
+                <div class="icon"><img src="42-1714494717.webp" width="100px" height="100px" alt="Frenos"></div>
+                <small>FRENOS / PASTILLAS</small>
+                <h3>Pastillas Cerámicas</h3>
+                <button class="btn-quote">COTIZAR</button>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <h2>Solicitud de Cotización</h2>
+            <form>
+                <div class="input-group">
+                    <label>Nombre Completo *</label>
+                    <input type="text" placeholder="Ej: Juan Pérez">
+                </div>
+                <div class="input-group">
+                    <label>Referencia (subir foto) *</label>
+                    <input type="file" class="file-input">
+                </div>
+                <div class="input-group">
+                    <label>Marca y Modelo del Vehículo *</label>
+                    <input type="text">
+                </div>
+                <button type="submit" class="btn-submit">Solicitar Cotización</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="scriptusa.js"></script>
+</body>
+</html>

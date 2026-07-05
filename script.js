@@ -843,6 +843,41 @@ window.filtrarPorCategoria = (categoria) => {
 };
 
 
+// Función para subir la publicidad a Firebase
+async function subirPublicidad() {
+    const archivo = document.getElementById('input-archivo-pub').files[0];
+    const link = document.getElementById('link-publicidad').value;
+    const btn = document.getElementById('btn-guardar-pub');
+
+    if (!archivo || !link) return alert("Selecciona imagen y pon un link");
+
+    btn.innerText = "Subiendo...";
+    btn.disabled = true;
+
+    try {
+        // 1. Subir a Cloudinary (usando tu función existente)
+        const urlImagen = await subirImagenACloudinary(archivo);
+
+        // 2. Guardar en Firestore en una colección llamada 'publicidad'
+        await addDoc(collection(db, "publicidad"), {
+            imagen: urlImagen,
+            link: link,
+            fecha: new Date()
+        });
+
+        alert("Publicidad agregada");
+        location.reload(); // Recargamos para ver el nuevo slide
+    } catch (e) {
+        alert("Error: " + e.message);
+        btn.disabled = false;
+        btn.innerText = "Guardar y Publicar";
+    }
+}
+
+
+
+
+
 
 
 window.abrirCarrito = abrirCarrito;
@@ -858,4 +893,3 @@ window.enviarWhatsApp = enviarWhatsApp;
 window.cambiarCantidad = cambiarCantidad;
 window.agregarAlCarrito = agregarAlCarrito;
 window.cargarCatalogo = cargarCatalogo; // AGREGA ESTA LÍNEA
-

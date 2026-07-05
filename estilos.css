@@ -17,6 +17,7 @@
     --color-alerta: #e76f51;        /* Color llamativo para el contador del carrito */
 }
 
+
 /* Contenedor principal del encabezado */
 .navbar-moderna {
     display: flex;

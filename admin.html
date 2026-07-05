@@ -163,7 +163,15 @@ if (btnPublicar) {
 
 
 
-
+<div id="modal-publicidad" class="modal-oculto">
+    <div class="modal-contenido">
+        <h3>Nueva Publicidad</h3>
+        <input type="file" id="input-archivo-pub" accept="image/*">
+        <input type="text" id="link-publicidad" placeholder="URL de destino (ej: https://google.com)">
+        <button id="btn-guardar-pub" onclick="subirPublicidad()">Guardar y Publicar</button>
+        <button onclick="cerrarModalPub()">Cancelar</button>
+    </div>
+</div>
 
 
     
@@ -338,5 +346,3 @@ if (btnPublicar) {
 <script type="module" src="script.js"></script>
 </body>
 </html>
-
-
