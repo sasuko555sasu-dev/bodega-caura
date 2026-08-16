@@ -101,6 +101,8 @@ if (btnPublicar) {
     <ul class="lista-menu">
         <li><a href="login.html"><i class="fa-solid fa-user"></i> Administrador</a></li>
         <li><a href="index.html"><i class="fa-solid fa-house"></i> INICIO</a></li>
+        <li><a href="" onclick="limpiarFiltro()"><i class="fa-solid fa-users"></i>Quienes Somos</a></li>
+
         
         <li class="categoria-padre">
             <a href="#" onclick="toggleSubmenu(event)" class="btn-categoria">
@@ -178,29 +180,53 @@ if (btnPublicar) {
     <!-- CONTENEDOR PRINCIPAL DE LOS CAROUSELS (OPTIMIZADO PARA MÓVILES) -->
 <div class="modulo-superior-container">
 
-    <!-- BLOCK 1: CARRUSEL DE PUBLICIDAD (AUTOMÁTICO Y LIMPIO) -->
-    <div class="carousel-publicidad">
-        <div class="pista-publicidad" id="pistaPublicidad">
-            
-            <!-- Banner 1: Desayunos -->
-            <div class="slide-publicidad">
-                <!-- CAMBIAR IMAGEN AQUÍ - PUBLICIDAD 1 -->
-                <img src="IMG CARRUSEL 1/Gemini_Generated_Image_e1p533e1p533e1p5.png">
-            </div>
-            
-            <!-- Banner 2: Productos Nacionales -->
-            <div class="slide-publicidad">
-                <!-- CAMBIAR IMAGEN AQUÍ - PUBLICIDAD 2 -->
-                <img src="IMG CARRUSEL 1/Gemini_Generated_Image_pucjmhpucjmhpucj.png">
-            </div>
-            
-            <!-- Banner 3: Ofertas de Almacén -->
-            <div class="slide-publicidad">
-                <!-- CAMBIAR IMAGEN AQUÍ - PUBLICIDAD 3 -->
-                <img src="IMG CARRUSEL 1/484484855_1115564883918618_8188765344780215297_n.jpg">
-            </div>
-            
-        </div>
+    <!-- =========================================================
+     CARRUSEL PUBLICIDAD INDEPENDIENTE
+     ========================================================= -->
+
+<section id="caura-publicidad-carrusel" class="caura-pub-carrusel">
+
+    <!-- PISTA DEL CARRUSEL -->
+    <div id="caura-pub-pista" class="caura-pub-pista">
+        <!-- Las publicidades se generan automáticamente -->
+    </div>
+
+    <!-- BOTÓN AGREGAR PUBLICIDAD -->
+    <button
+        id="caura-pub-btn-agregar"
+        class="caura-pub-btn-agregar"
+        type="button">
+        <i class="fa-solid fa-plus"></i>
+        <span>Agregar</span>
+    </button>
+
+    <!-- INPUT OCULTO -->
+    <input
+        type="file"
+        id="caura-pub-input"
+        accept="image/*"
+        hidden
+    >
+
+    <!-- INDICADORES -->
+    <div
+        id="caura-pub-indicadores"
+        class="caura-pub-indicadores">
+    </div>
+
+    <!-- MENSAJE CUANDO NO HAY PUBLICIDADES -->
+    <div
+        id="caura-pub-vacio"
+        class="caura-pub-vacio">
+        <i class="fa-solid fa-image"></i>
+        <span>No hay publicidades</span>
+    </div>
+
+</section>
+
+<!-- =========================================================
+     FIN CARRUSEL PUBLICIDAD
+     ========================================================= -->
     </div>
 
     <!-- BLOCK 2: CARRUSEL DE PATROCINADORES (MANUAL CON FLECHAS) -->
@@ -268,6 +294,10 @@ if (btnPublicar) {
         
         <button class="btn-agregar-nuevo .b" onclick="window.location.href='resultados.html'">
             <i class="fa-solid fa-chart-pie"></i> Resultados
+        </button>
+
+        <button class="btn-agregar-nuevo" id="btn-ver-ocultos">
+            <i class="fa-solid fa-eye-slash"></i> Ocultos
         </button>
     </div>
 </div>
@@ -344,5 +374,6 @@ if (btnPublicar) {
 <main id="contenedor-admin" class="contenedor-tienda"></main>
 
 <script type="module" src="script.js"></script>
+<script type="module" src="carrusel-publicidad.js"></script>
 </body>
 </html>

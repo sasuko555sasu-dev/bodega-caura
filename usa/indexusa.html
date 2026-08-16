@@ -41,13 +41,59 @@
 </header>
 
     <div class="modulo-superior-container">
-        <div class="carousel-publicidad">
-            <div class="pista-publicidad" id="pistaPublicidad">
-                <div class="slide-publicidad"><img src="Gemini_Generated_Image_fuf8jjfuf8jjfuf8.png"></div>
-                <div class="slide-publicidad"><img src="IMG CARRUSEL 1/Gemini_Generated_Image_pucjmhpucjmhpucj.png"></div>
-                <div class="slide-publicidad"><img src="IMG CARRUSEL 1/484484855_1115564883918618_8188765344780215297_n.jpg"></div>
-            </div>
+
+        <div class="modulo-superior-container">
+
+    <div class="carousel-publicidad">
+
+        <div class="pista-publicidad" id="pistaPublicidad">
         </div>
+
+        <button class="carrusel-btn carrusel-prev" id="btnPrev">
+            &#10094;
+        </button>
+
+        <button class="carrusel-btn carrusel-next" id="btnNext">
+            &#10095;
+        </button>
+
+        <div class="controles-carrusel">
+
+            <label class="btn-carrusel agregar-imagen">
+                <i class="fa-solid fa-plus"></i>
+                Agregar imagen
+
+                <input
+                    type="file"
+                    id="inputImagen"
+                    accept="image/*"
+                    multiple
+                    hidden
+                >
+            </label>
+
+            <button
+                type="button"
+                class="btn-carrusel eliminar-imagen"
+                id="btnEliminar"
+            >
+                <i class="fa-solid fa-trash"></i>
+                Eliminar
+            </button>
+
+        </div>
+
+        <div
+            class="indicadores-carrusel"
+            id="indicadoresCarrusel">
+        </div>
+
+    </div>
+
+</div>
+
+
+
         <div class="carousel-patrocinadores">
             <button class="flecha-nav prev" id="btnPrevPatroc">&#10094;</button>
             <div class="contenedor-marcas" id="contenedorMarcas">

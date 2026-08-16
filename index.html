@@ -33,7 +33,7 @@
     <ul class="lista-menu">
         <li><a href="login.html"><i class="fa-solid fa-user"></i> Administrador</a></li>
         <li><a href="#" onclick="limpiarFiltro()"><i class="fa-solid fa-house"></i> INICIO</a></li>
-        <li><a href="usa\indexusa.html" onclick="limpiarFiltro()"><i class="fa-solid fa-flag-usa"></i>. Compra en USA</a></li>
+        <li><a href="" onclick="limpiarFiltro()"><i class="fa-solid fa-users"></i>Quienes Somos</a></li>
 
         
         <li class="categoria-padre">
@@ -104,32 +104,27 @@
     <!-- CONTENEDOR PRINCIPAL DE LOS CAROUSELS (OPTIMIZADO PARA MÓVILES) -->
 <div class="modulo-superior-container">
 
-    <!-- BLOCK 1: CARRUSEL DE PUBLICIDAD (AUTOMÁTICO Y LIMPIO) -->
-    <div class="carousel-publicidad">
-        <div class="pista-publicidad" id="pistaPublicidad">
-            
-            <!-- Banner 1: Desayunos -->
-            <div class="slide-publicidad">
-                <!-- CAMBIAR IMAGEN AQUÍ - PUBLICIDAD 1 -->
-                <img src="IMG CARRUSEL 1/Gemini_Generated_Image_e1p533e1p533e1p5.png">
-            </div>
-            
-            <!-- Banner 2: Productos Nacionales -->
-            <div class="slide-publicidad">
-                <!-- CAMBIAR IMAGEN AQUÍ - PUBLICIDAD 2 -->
-                <img src="IMG CARRUSEL 1/Gemini_Generated_Image_pucjmhpucjmhpucj.png">
-            </div>
-            
-            <!-- Banner 3: Ofertas de Almacén -->
-            <div class="slide-publicidad">
-                <!-- CAMBIAR IMAGEN AQUÍ - PUBLICIDAD 3 -->
-                <img src="IMG CARRUSEL 1/484484855_1115564883918618_8188765344780215297_n.jpg">
-            </div>
-            
-        </div>
+    <!-- CARRUSEL DE PUBLICIDAD -->
+<section id="carrusel-publicidad">
+    <div id="publicidad-slider">
+        <!-- Las imágenes se cargarán automáticamente desde Firebase -->
     </div>
 
-    <!-- BLOCK 2: CARRUSEL DE PATROCINADORES (MANUAL CON FLECHAS) -->
+    <button id="pub-anterior" class="pub-flecha pub-anterior">
+        &#10094;
+    </button>
+
+    <button id="pub-siguiente" class="pub-flecha pub-siguiente">
+        &#10095;
+    </button>
+
+    <div id="pub-indicadores"></div>
+</section>
+
+<script type="module" src="carrusel-publicidad.js"></script>
+
+</div>
+<!-- BLOCK 2: CARRUSEL DE PATROCINADORES (MANUAL CON FLECHAS) -->
     <div class="carousel-patrocinadores">
         <!-- Flecha Izquierda -->
         <button class="flecha-nav prev" id="btnPrevPatroc" aria-label="Anterior">&#10094;</button>
@@ -171,7 +166,7 @@
         <!-- Flecha Derecha -->
         <button class="flecha-nav next" id="btnNextPatroc" aria-label="Siguiente">&#10095;</button>
     </div>
-
+    
 </div>
 
 

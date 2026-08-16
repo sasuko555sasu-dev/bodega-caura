@@ -127,7 +127,17 @@ document.addEventListener('error', function(e) {
 document.addEventListener('DOMContentLoaded', () => {
     
    
+const btnOcultos = document.getElementById("btn-ver-ocultos");
 
+    if (btnOcultos) {
+
+        btnOcultos.addEventListener("click", () => {
+
+            mostrarProductosOcultos();
+
+        });
+
+    }
 
 
 
@@ -428,10 +438,7 @@ async function crearNuevoProducto() {
 }
 
 
-    // 4. Carrusel
-    if (document.getElementById("pistaPublicidad")) iniciarCarrusel();
-
-
+  
 
 
 
@@ -486,16 +493,145 @@ if (btnCerrar) {
 }
 
 
-function iniciarCarrusel() {
-    const pista = document.getElementById("pistaPublicidad");
-    const slides = document.querySelectorAll(".slide-publicidad");
-    if (!pista || slides.length === 0) return;
-    let i = 0;
-    setInterval(() => {
-        i = (i + 1) % slides.length;
-        pista.style.transform = `translateX(-${i * (100 / slides.length)}%)`;
-    }, 4000);
-}
+// =====================================================
+// FILTRO: MOSTRAR PRODUCTOS OCULTOS
+// =====================================================
+
+window.mostrarProductosOcultos = async function() {
+
+    const contenedor = document.getElementById('contenedor-admin');
+
+    if (!contenedor) return;
+
+    contenedor.innerHTML = '<div class="loader"></div>';
+
+    try {
+
+        const productosRef = collection(db, "productos");
+        const snapshot = await getDocs(productosRef);
+
+        contenedor.innerHTML = "";
+
+        let encontrados = 0;
+
+        snapshot.forEach((documento) => {
+
+            const p = documento.data();
+
+            // SOLO productos ocultos
+            if (p.oculto !== true) return;
+
+            encontrados++;
+
+            contenedor.innerHTML += `
+                <div class="tarjeta-producto producto-oculto" 
+                     style="position: relative;">
+
+                    <!-- OJO -->
+                    <div class="icono-ojo"
+                         onclick="toggleOcultar('${documento.id}', true)"
+                         style="
+                            cursor:pointer;
+                            position:absolute;
+                            top:10px;
+                            right:10px;
+                            z-index:10;
+                            background:white;
+                            padding:7px;
+                            border-radius:50%;
+                            box-shadow:0 2px 5px rgba(0,0,0,0.2);
+                         ">
+
+                        <i class="fa-solid fa-eye-slash"></i>
+
+                    </div>
+
+                    <!-- IMAGEN -->
+                    <div class="img-container"
+                         onclick="verDetalle(
+                            '${p.nombre}',
+                            ${p.precio},
+                            '${p.descripcion || ""}',
+                            '${p.imagen}',
+                            '${p.categoria}'
+                         )">
+
+                        <img src="${p.imagen}" alt="${p.nombre}">
+
+                    </div>
+
+                    <!-- INFORMACIÓN -->
+                    <div class="info-producto">
+
+                        <span class="etiqueta-cat">
+                            ${p.categoria}
+                        </span>
+
+                        <h3>${p.nombre}</h3>
+
+                        <p class="precio">
+                            $${p.precio}
+                        </p>
+
+                    </div>
+
+                    <!-- ACCIONES -->
+                    <div class="acciones-card">
+
+                        <button 
+                            class="btn-editar"
+                            onclick="prepararEdicion(
+                                '${documento.id}',
+                                '${p.nombre}',
+                                ${p.precio},
+                                '${p.descripcion || ""}',
+                                '${p.categoria}'
+                            )">
+                            Editar
+                        </button>
+
+                        <button 
+                            class="btn-eliminar"
+                            onclick="eliminarProducto('${documento.id}')">
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+        });
+
+        // Si no hay productos ocultos
+        if (encontrados === 0) {
+
+            contenedor.innerHTML = `
+                <div style="
+                    width:100%;
+                    text-align:center;
+                    padding:40px;
+                    color:#888;
+                ">
+                    <i class="fa-solid fa-eye" 
+                       style="font-size:40px; margin-bottom:15px;">
+                    </i>
+
+                    <p>No hay productos ocultos.</p>
+                </div>
+            `;
+        }
+
+    } catch (error) {
+
+        console.error("Error al buscar productos ocultos:", error);
+
+        contenedor.innerHTML = `
+            <p style="text-align:center;">
+                Error al cargar los productos ocultos.
+            </p>
+        `;
+    }
+};
 
 
 

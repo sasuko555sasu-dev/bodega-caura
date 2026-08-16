@@ -295,41 +295,7 @@
 }
 
 /* --- BLOCK 1: CARRUSEL DE PUBLICIDAD (ESTILO MODERNO CON AIRE) --- */
-.carousel-publicidad {
-    width: 100%;
-    height: 180px; 
-    overflow: hidden;
-    position: relative;
-    /* Eliminamos el padding de aquí para que la pista maneje los espacios de los slides de forma limpia */
-    padding: 0; 
-    box-sizing: border-box;
-}
-
-.pista-publicidad {
-    display: flex;
-    width: 300%; 
-    height: 100%; 
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.slide-publicidad {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    /* SEPARACIÓN ESTÉTICA: Deja 12px de espacio libre a los lados de cada banner */
-    padding: 0 12px; 
-}
-
-.slide-publicidad img {
-    width: 100%;
-    height: 100%; 
-    border-radius: 16px;
-    display: block;
-    object-fit: cover; 
-    object-position: center;
-    /* SOMBRA SUTIL: Le da profundidad al banner para que parezca flotar elegantemente sobre el fondo */
-    box-shadow: 0 4px 12px rgba(166, 144, 126, 0.15); 
-}
+.carousel-publicidad { width: 100%; height: 180px; overflow: hidden; position: relative; box-sizing: border-box; border-radius: 16px; } /* ========================================== PISTA DEL CARRUSEL ========================================== */ .pista-publicidad { display: flex; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform; } /* ========================================== CADA IMAGEN ========================================== */ .slide-publicidad { min-width: 100%; width: 100%; height: 100%; padding: 0 12px; box-sizing: border-box; flex-shrink: 0; } .slide-publicidad img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; border-radius: 16px; box-shadow: 0 4px 12px rgba(166, 144, 126, 0.15); user-select: none; -webkit-user-drag: none; } /* ========================================== FLECHAS DEL CARRUSEL ========================================== */ .flecha-carrusel { position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border: none; border-radius: 50%; background: rgba(255, 255, 255, 0.92); color: #461400; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transition: transform 0.2s ease, background 0.2s ease; } .flecha-carrusel:hover { background: #ffffff; transform: translateY(-50%) scale(1.08); } .flecha-carrusel:active { transform: translateY(-50%) scale(0.92); } .flecha-carrusel-prev { left: 18px; } .flecha-carrusel-next { right: 18px; } /* ========================================== INDICADORES ========================================== */ .indicadores-carrusel { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; z-index: 10; } .indicador-carrusel { width: 7px; height: 7px; border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.65); padding: 0; cursor: pointer; transition: width 0.3s ease, background 0.3s ease; } .indicador-carrusel.activo { width: 20px; border-radius: 10px; background: #ffffff; } /* ========================================== MÓVIL ========================================== */ @media (max-width: 500px) { .carousel-publicidad { height: 180px; } .flecha-carrusel { width: 29px; height: 29px; font-size: 13px; } .flecha-carrusel-prev { left: 16px; } .flecha-carrusel-next { right: 16px; } }
 
 /* --- BLOCK 2: CARRUSEL DE PATROCINADORES MANUAL --- */
 .carousel-patrocinadores {
@@ -1485,4 +1451,579 @@ body {
     align-items: center;
     gap: 4px;
     flex-shrink: 0; /* Asegura que el botón no se encoja aunque el texto sea largo */
+}/* =========================================================
+   CARRUSEL PUBLICIDAD CAURA - INDEPENDIENTE
+   ========================================================= */
+
+.caura-pub-carrusel {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #eee;
+    box-sizing: border-box;
+    aspect-ratio: 16 / 6;
+}
+
+/* PISTA */
+
+.caura-pub-pista {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.7s ease-in-out;
+}
+
+/* SLIDE */
+
+.caura-pub-slide {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.caura-pub-slide img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+/* =========================================================
+   BOTÓN AGREGAR
+   ========================================================= */
+
+.caura-pub-btn-agregar {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+
+    border: none;
+    outline: none;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 9px 14px;
+
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, 0.90);
+    color: #461400;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+
+    z-index: 20;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.caura-pub-btn-agregar:hover {
+    transform: translateY(-2px);
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.caura-pub-btn-agregar:active {
+    transform: scale(0.96);
+}
+
+.caura-pub-btn-agregar i {
+    font-size: 13px;
+}
+
+/* =========================================================
+   BOTÓN ELIMINAR
+   ========================================================= */
+
+.caura-pub-btn-eliminar {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.92);
+    color: #b00000;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    z-index: 15;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.20);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.caura-pub-btn-eliminar:hover {
+    transform: scale(1.08);
+    background: #ffffff;
+}
+
+.caura-pub-btn-eliminar:active {
+    transform: scale(0.94);
+}
+
+/* =========================================================
+   INDICADORES
+   ========================================================= */
+
+.caura-pub-indicadores {
+    position: absolute;
+
+    bottom: 20px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 7px;
+
+    z-index: 10;
+
+    pointer-events: none;
+}
+
+.caura-pub-indicador {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.55);
+
+    transition:
+        width 0.25s ease,
+        background 0.25s ease;
+}
+
+.caura-pub-indicador.activo {
+    width: 20px;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+/* =========================================================
+   SIN PUBLICIDADES
+   ========================================================= */
+
+.caura-pub-vacio {
+    position: absolute;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 10px;
+
+    color: #777;
+
+    background: #f1f1f1;
+
+    font-size: 15px;
+}
+
+.caura-pub-vacio i {
+    font-size: 35px;
+    opacity: 0.5;
+}
+
+/* =========================================================
+   CARGANDO
+   ========================================================= */
+
+.caura-pub-cargando {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.65);
+
+    z-index: 30;
+}
+
+.caura-pub-spinner {
+    width: 35px;
+    height: 35px;
+
+    border: 4px solid #ddd;
+    border-top-color: #461400;
+
+    border-radius: 50%;
+
+    animation: cauraPubGirar 0.8s linear infinite;
+}
+
+@keyframes cauraPubGirar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .caura-pub-carrusel {
+        border-radius: 14px;
+        aspect-ratio: 16 / 8;
+    }
+
+    .caura-pub-btn-agregar {
+        right: 10px;
+        bottom: 10px;
+
+        padding: 8px 11px;
+
+        font-size: 12px;
+    }
+
+    .caura-pub-btn-eliminar {
+        top: 9px;
+        right: 9px;
+
+        width: 30px;
+        height: 30px;
+
+        font-size: 13px;
+    }
+
+    .caura-pub-indicadores {
+        bottom: 14px;
+    }
+}
+
+/* =========================================================
+   PANTALLAS MUY PEQUEÑAS
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    .caura-pub-carrusel {
+        border-radius: 10px;
+        aspect-ratio: 16 / 9;
+    }
+
+    .caura-pub-btn-agregar span {
+        display: none;
+    }
+
+    .caura-pub-btn-agregar {
+        width: 36px;
+        height: 36px;
+
+        padding: 0;
+
+        justify-content: center;
+    }
+
+    .caura-pub-btn-agregar i {
+        font-size: 14px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   CARRUSEL PUBLICIDAD
+========================================== */
+
+#carrusel-publicidad {
+
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 20px auto;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background: #eee;
+}
+
+
+/* ==========================================
+   PISTA
+========================================== */
+
+#publicidad-slider {
+
+    display: flex;
+
+    width: 100%;
+
+    height: 300px;
+
+    transform: translateX(0);
+
+}
+
+
+/* ==========================================
+   TRANSICIÓN
+========================================== */
+
+#publicidad-slider.transicion-carrusel {
+
+    transition:
+        transform 0.8s ease-in-out;
+
+}
+
+
+/* ==========================================
+   CADA PUBLICIDAD
+========================================== */
+
+.publicidad-slide {
+
+    min-width: 100%;
+
+    width: 100%;
+
+    height: 100%;
+
+    flex-shrink: 0;
+}
+
+
+/* ==========================================
+   ENLACE
+========================================== */
+
+.publicidad-enlace {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+}
+
+
+/* ==========================================
+   IMAGEN
+========================================== */
+
+.imagen-publicidad {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* ==========================================
+   FLECHAS
+========================================== */
+
+.pub-flecha {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.85);
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    z-index: 10;
+
+    transition: 0.2s;
+}
+
+
+.pub-flecha:hover {
+
+    background: white;
+
+    transform:
+        translateY(-50%)
+        scale(1.08);
+
+}
+
+
+.pub-anterior {
+
+    left: 15px;
+
+}
+
+
+.pub-siguiente {
+
+    right: 15px;
+
+}
+
+
+/* ==========================================
+   INDICADORES
+========================================== */
+
+#pub-indicadores {
+
+    position: absolute;
+
+    bottom: 12px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 7px;
+
+    z-index: 10;
+}
+
+
+.pub-punto {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.6);
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+
+.pub-punto.activo {
+
+    width: 22px;
+
+    border-radius: 10px;
+
+    background: white;
+
+}
+
+
+/* ==========================================
+   MÓVIL
+========================================== */
+
+@media (max-width: 600px) {
+
+    #carrusel-publicidad {
+
+        margin: 10px auto;
+
+        border-radius: 12px;
+
+    }
+
+
+    #publicidad-slider {
+
+        height: 180px;
+
+    }
+
+
+    .pub-flecha {
+
+        width: 34px;
+
+        height: 34px;
+
+        font-size: 18px;
+
+    }
+
+
+    .pub-anterior {
+
+        left: 8px;
+
+    }
+
+
+    .pub-siguiente {
+
+        right: 8px;
+
+    }
+
 }
