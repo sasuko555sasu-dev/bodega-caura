@@ -1,0 +1,724 @@
+/* =========================================================
+   OFERTAS EXTERNAS
+   Amazon / Alibaba / Shein / Temu
+========================================================= */
+
+
+/* =========================================================
+   MÓDULO CLIENTE
+========================================================= */
+
+.modulo-ofertas-externas {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 16px 10px 18px;
+    box-sizing: border-box;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+
+/* ENCABEZADO */
+
+.ofertas-externas-encabezado {
+    padding: 0 5px 12px;
+}
+
+.ofertas-externas-etiqueta {
+    display: block;
+    margin-bottom: 4px;
+
+    font-size: 9px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+
+    color: #8d7b6b;
+}
+
+.ofertas-externas-titulo {
+    margin: 0;
+
+    font-size: 22px;
+    line-height: 1.15;
+    font-weight: 700;
+
+    color: #1d1d1d;
+}
+
+.ofertas-externas-titulo span {
+    color: #714b32;
+}
+
+.ofertas-externas-descripcion {
+    margin: 6px 0 0;
+
+    font-size: 12px;
+    color: #777;
+}
+
+
+/* =========================================================
+   CARRUSEL
+========================================================= */
+
+.ofertas-externas-carrusel {
+    width: 100%;
+
+    display: flex;
+    align-items: stretch;
+
+    gap: 10px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 4px 3px 10px;
+
+    box-sizing: border-box;
+
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.ofertas-externas-carrusel::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================================================
+   TARJETA CLIENTE
+========================================================= */
+
+.tarjeta-oferta-externa {
+    flex: 0 0 175px;
+
+    width: 175px;
+    min-width: 175px;
+
+    height: 270px;
+
+    padding: 9px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 1px solid #ece7e2;
+
+    border-radius: 13px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+}
+
+
+/* IMAGEN */
+
+.oferta-externa-imagen {
+    width: 100%;
+    height: 135px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #f8f7f5;
+
+    border-radius: 10px;
+}
+
+.oferta-externa-imagen img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* TIPO */
+
+.oferta-externa-tipo {
+    margin-top: 8px;
+
+    font-size: 8px;
+    line-height: 1;
+
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+
+    color: #a18469;
+}
+
+
+/* NOMBRE */
+
+.oferta-externa-nombre {
+    margin-top: 5px;
+
+    font-size: 13px;
+    line-height: 1.25;
+    font-weight: 600;
+
+    color: #292929;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+}
+
+
+/* PRECIO */
+
+.oferta-externa-precio {
+    margin-top: 6px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: #4c2a16;
+}
+
+
+/* COTIZAR */
+
+.btn-cotizar-oferta-externa {
+    width: 100%;
+
+    margin-top: auto;
+
+    padding: 9px 6px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #4c2a16;
+
+    color: #ffffff;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: transform 0.15s ease,
+                opacity 0.15s ease;
+}
+
+.btn-cotizar-oferta-externa:active {
+    transform: scale(0.97);
+    opacity: 0.85;
+}
+
+
+/* =========================================================
+   ADMINISTRADOR
+========================================================= */
+
+.admin-ofertas-externas {
+    width: 100%;
+
+    margin: 20px 0;
+
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #eee9e4;
+
+    border-radius: 14px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ENCABEZADO ADMIN */
+
+.admin-ofertas-externas-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.admin-ofertas-externas-info {
+    min-width: 0;
+}
+
+.admin-ofertas-externas-etiqueta {
+    display: block;
+
+    font-size: 8px;
+    letter-spacing: 1.5px;
+
+    color: #999;
+}
+
+.admin-ofertas-externas-titulo {
+    margin: 4px 0 2px;
+
+    font-size: 18px;
+
+    color: #432512;
+}
+
+.admin-ofertas-externas-descripcion {
+    margin: 0;
+
+    font-size: 10px;
+
+    color: #888;
+}
+
+
+/* =========================================================
+   BOTÓN OJITO
+========================================================= */
+
+.btn-estado-ofertas-externas {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f2eee9;
+
+    color: #4c2a16;
+
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+.btn-estado-ofertas-externas.oculto {
+    background: #eeeeee;
+    color: #999;
+}
+
+
+/* ESTADO */
+
+.estado-ofertas-externas {
+    margin-top: 12px;
+
+    padding: 9px 11px;
+
+    border-radius: 8px;
+
+    background: #f7f4f1;
+
+    font-size: 10px;
+
+    color: #765d49;
+}
+
+
+/* =========================================================
+   BOTÓN AGREGAR TARJETA
+========================================================= */
+
+.btn-agregar-oferta-externa {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 11px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #4c2a16;
+
+    color: #ffffff;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.btn-agregar-oferta-externa i {
+    margin-right: 5px;
+}
+
+
+/* =========================================================
+   LISTA DE TARJETAS EN ADMIN
+========================================================= */
+
+.lista-ofertas-externas-admin {
+    width: 100%;
+
+    margin-top: 14px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+/* ITEM */
+
+.item-oferta-externa-admin {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 8px;
+
+    border: 1px solid #eee;
+
+    border-radius: 10px;
+
+    background: #fff;
+}
+
+.item-oferta-externa-admin img {
+    width: 55px;
+    height: 55px;
+
+    flex: 0 0 55px;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+
+    background: #f7f7f7;
+}
+
+.item-oferta-externa-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.item-oferta-externa-info strong {
+    display: block;
+
+    font-size: 12px;
+
+    color: #333;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-oferta-externa-info small {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 9px;
+
+    color: #a17d60;
+}
+
+.item-oferta-externa-info span {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    color: #4c2a16;
+}
+
+
+/* ELIMINAR */
+
+.btn-eliminar-oferta-externa {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #f8eeee;
+
+    color: #a24d4d;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   MODAL ADMIN
+========================================================= */
+
+.modal-oferta-externa {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 15px;
+
+    box-sizing: border-box;
+
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.modal-oferta-externa.activo {
+    display: flex;
+}
+
+
+/* CONTENIDO */
+
+.contenido-modal-oferta-externa {
+    width: 100%;
+    max-width: 430px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+}
+
+
+/* CABECERA MODAL */
+
+.modal-oferta-externa-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+.modal-oferta-externa-cabecera h3 {
+    margin: 0;
+
+    font-size: 18px;
+
+    color: #432512;
+}
+
+.btn-cerrar-oferta-externa {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #777;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.campo-oferta-externa {
+    margin-bottom: 14px;
+}
+
+.campo-oferta-externa > label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    color: #555;
+}
+
+.campo-oferta-externa input,
+.campo-oferta-externa select {
+    width: 100%;
+
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: #333;
+
+    font-size: 12px;
+}
+
+.campo-oferta-externa input:focus,
+.campo-oferta-externa select:focus {
+    border-color: #8b6a50;
+}
+
+
+/* =========================================================
+   SELECTOR DE IMAGEN
+========================================================= */
+
+.selector-imagen-oferta-externa {
+    width: 100%;
+    min-height: 120px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: 2px dashed #d9d0c8;
+
+    border-radius: 10px;
+
+    color: #999;
+
+    cursor: pointer;
+
+    overflow: hidden;
+}
+
+.selector-imagen-oferta-externa i {
+    font-size: 25px;
+}
+
+.selector-imagen-oferta-externa img {
+    display: none;
+
+    width: 100%;
+    height: 120px;
+
+    object-fit: contain;
+}
+
+.selector-imagen-oferta-externa.con-imagen img {
+    display: block;
+}
+
+.selector-imagen-oferta-externa.con-imagen i,
+.selector-imagen-oferta-externa.con-imagen span {
+    display: none;
+}
+
+
+/* =========================================================
+   GUARDAR
+========================================================= */
+
+.btn-guardar-oferta-externa {
+    width: 100%;
+
+    margin-top: 4px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #4c2a16;
+
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.btn-guardar-oferta-externa:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   MENSAJE SIN PRODUCTOS
+========================================================= */
+
+.sin-ofertas-externas {
+    width: 100%;
+
+    padding: 20px 10px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    color: #999;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .modulo-ofertas-externas {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .ofertas-externas-titulo {
+        font-size: 21px;
+    }
+
+    .tarjeta-oferta-externa {
+        flex-basis: 165px;
+        width: 165px;
+        min-width: 165px;
+
+        height: 260px;
+    }
+
+    .oferta-externa-imagen {
+        height: 128px;
+    }
+}

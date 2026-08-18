@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="estilos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="modulo-ofertas-externas/estilos-ofertas-externas.css"
+>    
+
+
+
 
     <script type="module">
     // IMPORTANTE: Usa la misma versión 10.8.1 para todo
@@ -276,7 +281,275 @@ if (btnPublicar) {
 
 
 
+<!-- =====================================================
+     ADMINISTRACIÓN DE OFERTAS EXTERNAS
+===================================================== -->
 
+<section
+    id="admin-ofertas-externas"
+    class="admin-ofertas-externas"
+>
+
+    <div class="admin-ofertas-externas-cabecera">
+
+        <div class="admin-ofertas-externas-info">
+
+            <span class="admin-ofertas-externas-etiqueta">
+                MÓDULO OPCIONAL
+            </span>
+
+            <h2 class="admin-ofertas-externas-titulo">
+                Ofertas externas
+            </h2>
+
+            <p class="admin-ofertas-externas-descripcion">
+                Amazon, Alibaba, Shein y otros productos.
+            </p>
+
+        </div>
+
+
+        <!-- OJITO -->
+
+        <button
+            type="button"
+            id="btn-estado-ofertas-externas"
+            class="btn-estado-ofertas-externas"
+            title="Mostrar u ocultar módulo"
+        >
+
+            <i
+                id="icono-estado-ofertas-externas"
+                class="fa-solid fa-eye-slash"
+            ></i>
+
+        </button>
+
+    </div>
+
+
+    <!-- ESTADO -->
+
+    <div
+        id="estado-ofertas-externas"
+        class="estado-ofertas-externas"
+    >
+        Módulo oculto para los clientes.
+    </div>
+
+
+    <!-- AGREGAR TARJETA -->
+
+    <button
+        type="button"
+        id="btn-agregar-oferta-externa"
+        class="btn-agregar-oferta-externa"
+    >
+
+        <i class="fa-solid fa-plus"></i>
+
+        Agregar tarjeta
+
+    </button>
+
+
+    <!-- LISTA -->
+
+    <div
+        id="lista-ofertas-externas-admin"
+        class="lista-ofertas-externas-admin"
+    >
+
+        <!--
+            JavaScript cargará aquí
+            las tarjetas guardadas.
+        -->
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MODAL AGREGAR OFERTA
+===================================================== -->
+
+<div
+    id="modal-oferta-externa"
+    class="modal-oferta-externa"
+>
+
+    <div
+        class="contenido-modal-oferta-externa"
+    >
+
+        <div
+            class="modal-oferta-externa-cabecera"
+        >
+
+            <h3>
+                Nueva tarjeta
+            </h3>
+
+
+            <button
+                type="button"
+                id="btn-cerrar-oferta-externa"
+                class="btn-cerrar-oferta-externa"
+            >
+                &times;
+            </button>
+
+        </div>
+
+
+        <!-- IMAGEN -->
+
+        <div class="campo-oferta-externa">
+
+            <label>
+                Imagen del producto
+            </label>
+
+
+            <label
+                for="imagen-oferta-externa"
+                id="selector-imagen-oferta-externa"
+                class="selector-imagen-oferta-externa"
+            >
+
+                <i class="fa-solid fa-image"></i>
+
+
+                <span id="texto-imagen-oferta-externa">
+                    Seleccionar imagen
+                </span>
+
+
+                <img
+                    id="vista-previa-oferta-externa"
+                    src=""
+                    alt="Vista previa"
+                >
+
+            </label>
+
+
+            <input
+                type="file"
+                id="imagen-oferta-externa"
+                accept="image/*"
+                hidden
+            >
+
+        </div>
+
+
+        <!-- NOMBRE -->
+
+        <div class="campo-oferta-externa">
+
+            <label
+                for="nombre-oferta-externa"
+            >
+                Nombre del producto
+            </label>
+
+
+            <input
+                type="text"
+                id="nombre-oferta-externa"
+                placeholder="Ej: Smart Watch 2"
+            >
+
+        </div>
+
+
+        <!-- PRECIO -->
+
+        <div class="campo-oferta-externa">
+
+            <label
+                for="precio-oferta-externa"
+            >
+                Precio
+            </label>
+
+
+            <input
+                type="number"
+                id="precio-oferta-externa"
+                min="0"
+                step="0.01"
+                placeholder="Ej: 31.42"
+            >
+
+        </div>
+
+
+        <!-- TIPO -->
+
+        <div class="campo-oferta-externa">
+
+            <label
+                for="tipo-oferta-externa"
+            >
+                Tipo
+            </label>
+
+
+            <select
+                id="tipo-oferta-externa"
+            >
+
+                <option value="">
+                    Selecciona una plataforma
+                </option>
+
+                <option value="Amazon">
+                    Amazon
+                </option>
+
+                <option value="Alibaba">
+                    Alibaba
+                </option>
+
+                <option value="Shein">
+                    Shein
+                </option>
+
+                <option value="Temu">
+                    Temu
+                </option>
+
+                <option value="AliExpress">
+                    AliExpress
+                </option>
+
+                <option value="Otro">
+                    Otro
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- GUARDAR -->
+
+        <button
+            type="button"
+            id="btn-guardar-oferta-externa"
+            class="btn-guardar-oferta-externa"
+        >
+
+            Guardar tarjeta
+
+        </button>
+
+    </div>
+
+</div>
 
 
 
@@ -375,5 +648,9 @@ if (btnPublicar) {
 
 <script type="module" src="script.js"></script>
 <script type="module" src="carrusel-publicidad.js"></script>
+<script
+    type="module"
+    src="modulo-ofertas-externas/ofertas-externas.js"
+></script>
 </body>
 </html>
