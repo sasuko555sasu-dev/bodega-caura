@@ -122,24 +122,18 @@
 
 .oferta-externa-imagen {
     width: 100%;
-    height: 135px;
-
+    height: 230px;
     display: flex;
     align-items: center;
     justify-content: center;
-
     overflow: hidden;
-
-    background: #f8f7f5;
-
-    border-radius: 10px;
 }
 
 .oferta-externa-imagen img {
     width: 100%;
     height: 100%;
-
     object-fit: contain;
+    display: block;
 }
 
 
@@ -721,4 +715,114 @@
     .oferta-externa-imagen {
         height: 128px;
     }
+}
+
+
+/* =========================================
+   INTERRUPTOR EN OFERTA
+   ========================================= */
+
+.campo-oferta-externa {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.campo-oferta-externa > label:first-child {
+    font-weight: 600;
+    color: #461400;
+    width: 100%;
+}
+
+.switch-oferta-externa {
+    position: relative;
+    width: 46px;
+    height: 24px;
+    display: inline-block;
+}
+
+.switch-oferta-externa input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-oferta-externa {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+
+    background: #d8d1c7;
+
+    border-radius: 30px;
+
+    transition: 0.25s;
+}
+
+.slider-oferta-externa::before {
+    content: "";
+
+    position: absolute;
+
+    width: 18px;
+    height: 18px;
+
+    left: 3px;
+    top: 3px;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+    transition: 0.25s;
+}
+
+.switch-oferta-externa input:checked + .slider-oferta-externa {
+    background: #461400;
+}
+
+.switch-oferta-externa input:checked + .slider-oferta-externa::before {
+    transform: translateX(22px);
+}
+
+.texto-estado-oferta-externa {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6b6259;
+}
+
+
+/* =========================================
+   ETIQUETA OFERTA
+   ========================================= */
+
+.oferta-externa-imagen {
+    position: relative;
+    overflow: hidden;
+}
+
+.oferta-externa-badge {
+    position: absolute;
+
+    right: 10px;
+    bottom: 10px;
+
+    background: #461400;
+    color: #fffaf3;
+
+    padding: 5px 9px;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+
+    z-index: 10;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
 }

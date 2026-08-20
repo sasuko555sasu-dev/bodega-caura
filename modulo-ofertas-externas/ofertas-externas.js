@@ -384,15 +384,25 @@ function crearTarjetaCliente(
 
     tarjeta.innerHTML = `
 
-        <div class="oferta-externa-imagen">
+       <div class="oferta-externa-imagen">
 
-            <img
-                src="${imagen}"
-                alt="${nombre}"
-                loading="lazy"
-            >
+    <img
+        src="${imagen}"
+        alt="${nombre}"
+        loading="lazy"
+    >
 
-        </div>
+    ${
+        producto.enOferta === true
+            ? `
+                <span class="oferta-externa-badge">
+                    OFERTA
+                </span>
+            `
+            : ""
+    }
+
+</div>
 
 
         <div class="oferta-externa-tipo">
@@ -1089,6 +1099,16 @@ function configurarEventosAdministrador() {
             "imagen-oferta-externa"
         );
 
+        const inputOferta =
+    document.getElementById(
+        "en-oferta-externa"
+    );
+
+    const textoOferta =
+        document.getElementById(
+            "texto-estado-oferta-externa"
+        );
+
 
     if (btnAgregar) {
 
@@ -1099,6 +1119,22 @@ function configurarEventosAdministrador() {
 
     }
 
+
+    if (inputOferta && textoOferta) {
+
+    inputOferta.addEventListener(
+        "change",
+        () => {
+
+            textoOferta.textContent =
+                inputOferta.checked
+                    ? "Sí"
+                    : "No";
+
+        }
+    );
+
+}
 
     if (btnCerrar) {
 
@@ -1508,6 +1544,11 @@ async function guardarOfertaExterna() {
                 imagenComprimida
             );
 
+        const enOferta =
+            document.getElementById(
+                "en-oferta-externa"
+            ).checked;    
+
 
         /*
          * 3. FIRESTORE
@@ -1537,6 +1578,9 @@ async function guardarOfertaExterna() {
 
                 imagen:
                     urlImagen,
+
+                enOferta: 
+                    enOferta,    
 
                 fecha:
                     new Date()
